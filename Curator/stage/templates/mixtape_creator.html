@@ -1,0 +1,52 @@
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+    var max_fields = 50;
+    var wrapper = $(".mixtape_form");
+    var add_button = $(".add_form_field");
+    var addButtonHtml = '<button class="add_form_field" type="button"><span style="font-size:16px; font-weight:bold;">+</span></button>'
+    var deleteButtonHtml = '<button class="add_form_field" type="button"><span style="font-size:16px; font-weight:bold;">-</span></button>'
+
+    var x = 1;
+    $(add_button).click(function(e) {
+        e.preventDefault();
+        if (x < max_fields) {
+            x++;
+            $(wrapper).append('<div><input type="text" name="track_' + x + '"/><a href="#" class="delete">Delete</a></div>'); //add input box
+            //$(wrapper).append('<div><input type="text" name="track_' + x + '"/>' + addButtonHtml + deleteButtonHtml + '</div>'); //add input box
+            $(".submitButton").remove()
+            $(wrapper).append('<input class="submitButton" type="submit" value="Submit">'); //add delete button
+        } else {
+            alert('You Reached the limits')
+        }
+    });
+
+    $(wrapper).on("click", ".delete", function(e) {
+        e.preventDefault();
+        $(this).parent('div').remove();
+        x--;
+    })
+    });
+    </script>
+</head>
+<body>
+<form action="/create_mixtape" class="mixtape_form" method="POST">
+    <label for="mixtape_name">Mixtape Name:</label><br>
+  <input type="text" id="mixtape_name" name="mixtape_name" value=""><br><br>
+
+  <label for="img">Cover Image URL:</label><br>
+  <input type="text" id="img" name="img" value=""><br><br>
+
+  <label>Track URLs:</label><br>
+  <input type="text" id="track_1" name="track_1" value="">
+    <button class="add_form_field">Add New Field &nbsp;
+      <span style="font-size:16px; font-weight:bold;">+ </span>
+    </button><br>
+
+  <input class="submitButton" type="submit" value="Submit">
+</form>
+</body>
+</html>
